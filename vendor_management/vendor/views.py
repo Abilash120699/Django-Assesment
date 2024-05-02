@@ -11,8 +11,6 @@ from rest_framework.response import Response
 class VendorViewset(viewsets.ModelViewSet):
     serializer_class = VendorSerializer
     queryset = vendor_profile.objects.all()
-    permission_classes = []
-    authentication_classes = []
 
     def get_serializer_class(self):
         if self.action == 'list':
