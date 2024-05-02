@@ -27,3 +27,10 @@ def update_vendor_performance(sender, instance, **kwargs):
     )
 
     vendor.save()
+
+@receiver(post_save, sender=purchase_order)
+def update_response_time(sender, instance, **kwargs):
+    if instance.acknowledgment_date:
+        vendor = instance.vendor
+        vendor.average_response_time = calculate_average_response_time(vendor)
+        vendor.save()
