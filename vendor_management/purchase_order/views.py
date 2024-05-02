@@ -3,10 +3,12 @@ from django.db.models import Avg,F, ExpressionWrapper, DurationField
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from purchase_order.models import purchase_order
+from purchase_order.models import purchase_order, HistoricalPerformance
 from django.utils import timezone
 from vendor.models import vendor_profile
-from purchase_order.serializers import PurchaseSerializer
+from purchase_order.serializers import PurchaseSerializer, HistoriacalSerializer
+
+
 # Create your views here.
 
 
@@ -49,3 +51,7 @@ class PurchaseViewset(viewsets.ModelViewSet):
             po.acknowledgment_date = timezone.now()
             po.save()
         return Response({'status': 'acknowledged'})
+
+class HistoricalViewset(viewsets.ModelViewSet):
+    queryset = HistoricalPerformance.objects.all()
+    serializer_class = HistoriacalSerializer
